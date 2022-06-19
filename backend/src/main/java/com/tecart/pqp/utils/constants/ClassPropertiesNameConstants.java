@@ -28,7 +28,7 @@ public class ClassPropertiesNameConstants {
 	public static final String CLASS_PROPERTY_USER_ID = "id";
 	public static final String CLASS_PROPERTY_USER_TYPE = "userType";
 	public static final String CLASS_PROPERTY_USER_EMAIL_ID = "emailId";
-	public static final String CLASS_PROPERTY_USER_MOBILE_NUMBER = "mobileNumber";
+	public static final String CLASS_PROPERTY_USER_MOBILE_NUMBER = "mobileNo";
 
 	// ROLE PROPERTIES
 	public static final String CLASS_PROPERTY_ROLE = "role";

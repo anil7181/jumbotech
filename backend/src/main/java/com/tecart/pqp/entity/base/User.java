@@ -29,6 +29,9 @@ public class User extends BaseEntity{
 	
 	@Column(name = "MOBILE_NO")
 	private String mobileNo;
+	
+	@Column(name = "USER_TYPE")
+	private int userType;
 
 	public int getId() {
 		return id;
@@ -68,6 +71,14 @@ public class User extends BaseEntity{
 
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
+	}
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 		
 }

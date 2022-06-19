@@ -11,10 +11,13 @@ public class MasterConstants {
 
 	// AUTHORITY NAME FOR COMMON APIS
 	public static final String COMMON_API = "COMMON_API";
+	public static final String SUPPER_ADMIN_API = "SUPPER_ADMIN_API";
+	public static final String NORMAL_API = "NORMAL_API";
+	public static final String ADMIN_API = "ADMIN_API";
 
 	// DEFAULT CONSTANT VALUES
 	public static final Integer DEFAULT_ORG_ID = 1;
-                         
+
 	// COMMON USED STRINGS
 	public static final String SORT_DIRECTION_ASC = "asc";
 	public static final String SORT_DIRECTION_DESC = "desc";
@@ -27,7 +30,7 @@ public class MasterConstants {
 	public static final boolean BOOLEAN_TRUE = true;
 	public static final boolean BOOLEAN_FALSE = false;
 	public static final String DEFAULT_SORT_KEY_FOR_MENU = "menuId";
-	
+
 	// COMMON USED MAGIC NUMBERS
 	public static final String STRING_NULL_VALUE = "null";
 	public static final String STRING_EMPTY_VALUE = "";
@@ -45,34 +48,38 @@ public class MasterConstants {
 
 	public static final int DEFAULT_NOT_SPECIFIED__ID = 0;
 	public static final int AS_PARENT_FOR_REGISTRATION = -1;
-	
-	//USER TYPE
+
+	// USER TYPE
 	public static final String USER_TYPE_SIIX_USER = "SIIX-USER";
 	public static final String USER_TYPE_SUPPLIER = "SUPPLIER";
-	
+
 	public static final String COMPANY_NAME = "Asvish Technology Partner (OPC) Pvt.Ltd.";
-	
-	//EMAIL TEMPLATES
+
+	// EMAIL TEMPLATES
 	public static final String EMAIL_TEMPLATE_NAME_REGISTRATION = "REGISTRATION";
 	public static final String EMAIL_TEMPLATE_NAME_PWD_RESET = "PWD RESET";
-	
+
 	public static final String EMAIL_TEMPLATE_TYPE = "EMAIL";
-	
-	
-	//OTP PARAMETERS
+
+	// OTP PARAMETERS
 	public static final String OTP_CAUSE_FOR_PWD_RESET = "PWD_RESET";
-	
-	//ACTIVE STATUS
+
+	// ACTIVE STATUS
 	public static final int DEFAULT_INT_PENDING_STATUS = 0;
 	public static final int DEFAULT_INT_ACTIVE__STATUS = 1;
 	public static final int DEFAULT_INT_IN_ACTIVE_STATUS = 2;
-	
+
 	public static final String DEFAULT_STR_PENDING_STATUS = "PENDING";
 	public static final String DEFAULT_STR_ACTIVE__STATUS = "ACTIVE";
 	public static final String DEFAULT_STR_IN_ACTIVE_STATUS = "IN-ACTIVE";
-	
-	//BOOLEAN 
+
+	// BOOLEAN
 	public static final boolean DEFAULT_YES = true;
 	public static final boolean DEFAULT_NO = false;
-	
+
+	// INT USER TYPE
+	public static final int DEFAULT_INT_NORMAL_USER = 0;
+	public static final int DEFAULT_INT_SUPER_ADMIN = 1;
+	public static final int DEFAULT_INT_ADMIN = 2;
+
 }

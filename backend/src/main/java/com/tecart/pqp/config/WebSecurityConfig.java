@@ -18,10 +18,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.techart.matrimony.service.UserService;
-import com.techart.matrimony.utils.constants.MasterConstants;
+import com.tecart.pqp.service.UserService;
+import com.tecart.pqp.utils.constants.MasterConstants;
 
 
+@SuppressWarnings("deprecation")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
