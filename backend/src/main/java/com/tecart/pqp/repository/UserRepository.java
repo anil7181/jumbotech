@@ -1,7 +1,5 @@
 package com.tecart.pqp.repository;
 
-import java.util.Date;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -17,8 +15,11 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 	User findByUserByUserName(@Param("userName") String userName);
 	
 	@Query(value = "SELECT * FROM base.user where user_name = :userName and password = :password and active = 1;", nativeQuery = true)
-	User findByUserNameAndPasswordWithValidToDateAfter(@Param("userName") String userName, @Param("password") String password, @Param("today") Date today);
+	User findByUserNameAndPasswordWithValidToDateAfter(@Param("userName") String userName, @Param("password") String password);
 		
 	User findByUserName(String userName);
+	
+	@Query("SELECT u.password FROM User u where u.id = :userId")
+	String findPasswordById(@Param("userId") int userId);
 	
 }

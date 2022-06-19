@@ -1,5 +1,7 @@
 package com.tecart.pqp.entity.base;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -95,6 +97,21 @@ public class Organization extends BaseEntity{
 	
 	@Column(name = "LOGO")
 	private String logo;
+
+	public Organization(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Organization() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Organization(String createdBy, Date createdTime, String updatedBy, Date updatedTime, int active) {
+		super(createdBy, createdTime, updatedBy, updatedTime, active);
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;

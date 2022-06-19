@@ -1,2 +1,336 @@
 -------------------------------------------------------------------------- create schema ------------------------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS BASE;
+
+CREATE SCHEMA IF NOT EXISTS PRODUCT;
+
+
+-------------------------------------------------------------------------- ORGANIZATION ------------------------------------------------------------------
+
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_ORG_ID;
+
+CREATE TABLE IF NOT EXISTS  BASE.ORGANIZATION (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_ORG_ID'),
+	NAME								VARCHAR(100),
+	CODE								VARCHAR(20),
+	DESCRIPTION							VARCHAR(100),
+	VISION								TEXT,
+	MISSION								TEXT,
+	CONTACT_PERSON_NAME					VARCHAR(100),
+	CONTACT_PERSON_EMAIL				VARCHAR(100),
+	CONTACT_PERSON_PHONE_NO				VARCHAR(100),
+	CONTACT_PERSON_SALUTION				VARCHAR(20),
+	ADDRESS1							VARCHAR(500),
+	ADDRESS2							VARCHAR(500),
+	ADDRESS3							VARCHAR(500),
+	CITY								VARCHAR(100),
+	COUNTRY								VARCHAR(100),
+	PINCODE								VARCHAR(20),
+	OFFICE_TELE_PHONE_NO				VARCHAR(100),
+	OFFICE_EMAIL_ID						VARCHAR(200),
+	OFFICE_MOBILE_NO					VARCHAR(100),
+	OFFICE_FAX_NO						VARCHAR(100),
+	WORKING_HOURS						TEXT,
+	FACEBOOK_LINK						VARCHAR(500),
+	TWITTER_LINK						VARCHAR(500),
+	LINKEDIN_LINK						VARCHAR(500),
+	YOUTUBE_LINK						VARCHAR(500),
+	ABOUT_US							TEXT,
+	ABOUT_US_IMG						VARCHAR(500),
+	LOGO								VARCHAR(500),
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT ORG_PKEY PRIMARY KEY (ID),
+	CONSTRAINT UNI_ORG_CODE_NAME UNIQUE(NAME, CODE)
+);
+
+
+-------------------------------------------------------------------------- USER ------------------------------------------------------------------
+
+
+
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_USER_ID;
+
+
+CREATE TABLE IF NOT EXISTS  BASE.USER (
+	ID 						INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_USER_ID'),
+	USER_NAME							VARCHAR(100),
+	EMAIL_ID							VARCHAR(100),
+	MOBILE_NO							VARCHAR(20),
+	PASSWORD							VARCHAR(200),
+	IS_EMAIL_NOTIFICATION_NEEDED		BOOLEAN DEFAULT TRUE,
+	USER_TYPE							INTEGER DEFAULT 1,
+	IS_VERIFIED							BOOLEAN DEFAULT FALSE,
+	IS_USER_IMG_PROTECTED				BOOLEAN DEFAULT FALSE,
+	USER_IMG_URL						VARCHAR(500),
+	ACTIVE								INTEGER DEFAULT 1,
+	ORG_ID								INTEGER,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT USER_PKEY PRIMARY KEY (ID),
+	FOREIGN KEY (ORG_ID) REFERENCES BASE.ORGANIZATION (ID),
+	CONSTRAINT UNI_USER_NAME UNIQUE(USER_NAME),
+	CONSTRAINT UNI_MOBILE_NO UNIQUE(MOBILE_NO),
+	CONSTRAINT UNI_EMAIL_ID UNIQUE(EMAIL_ID)
+);
+
+
+-------------------------------------------------------------------------- CATEGORY ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS PRODUCT.SEQ_CATEGORY_ID;
+
+
+CREATE TABLE IF NOT EXISTS  PRODUCT.CATEGORY (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('PRODUCT.SEQ_CATEGORY_ID'),
+	NAME								VARCHAR(100),
+	CODE								VARCHAR(100),
+	DESCRIPTION							TEXT,
+	FIELD1								TEXT,
+	FIELD2								TEXT,
+	FIELD3								TEXT,
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT USER_PKEY PRIMARY KEY (ID),
+	CONSTRAINT UNI_CAT_NAME_CODE UNIQUE(NAME, CODE)
+);
+
+
+-------------------------------------------------------------------------- DOCUMENTS ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS PRODUCT.SEQ_DOC_ID;
+
+
+CREATE TABLE IF NOT EXISTS  PRODUCT.DOCUMENTS (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('PRODUCT.SEQ_DOC_ID'),
+	NAME								VARCHAR(100),
+	CODE								VARCHAR(100),
+	DESCRIPTION							TEXT,
+	SET_AUTO_NAME						BOOLEAN DEFAULT TRUE,
+	DOC_LOCATION						VARCHAR(1000),
+	DOC_TYPE							VARCHAR(100),
+	RELATED_TO							VARCHAR(100),
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT DOC_PKEY PRIMARY KEY (ID),
+	CONSTRAINT UNI_DOC_NAME_CODE UNIQUE(NAME, CODE)
+);
+
+
+-------------------------------------------------------------------------- PRODUCT ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS PRODUCT.SEQ_PRODUCT_ID;
+
+
+CREATE TABLE IF NOT EXISTS  PRODUCT.PRODUCT (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('PRODUCT.SEQ_PRODUCT_ID'),
+	NAME								VARCHAR(100),
+	CODE								VARCHAR(100),
+	DESCRIPTION							TEXT,
+	MULTI_FUNCTIONAL_HEADING			TEXT,
+	MULTI_FUNCTIONAL_DESCRIPTION		TEXT,
+	CATEGORY_ID							INT,
+	MODEL								VARCHAR(500),
+	MANUFACTURED_BY						VARCHAR(500),
+	MANUFACTURED_INFO					TEXT,
+	INGREDIENTS							TEXT,
+	SAFTY_MEASURS						TEXT,
+	WARRENTY_INFO						TEXT,
+	GUARANTY_INFO						TEXT,
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT PRODUCT_PKEY PRIMARY KEY (ID),
+	FOREIGN KEY (CATEGORY_ID) REFERENCES PRODUCT.CATEGORY(ID),
+	CONSTRAINT UNI_PRODUCT_CAT_ID_CODE UNIQUE(NAME, CATEGORY_ID, CODE)
+);
+
+
+-------------------------------------------------------------------------- QUOTATION ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS PRODUCT.SEQ_QUOTATION_ID;
+
+
+CREATE TABLE IF NOT EXISTS  PRODUCT.QUOTATION (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('PRODUCT.SEQ_QUOTATION_ID'),
+	FIRST_NAME							VARCHAR(200),
+	LAST_NAME							VARCHAR(200),
+	COMPANY_NAME						VARCHAR(200),
+	COMPANY_TYPE						VARCHAR(200),
+	MOBILE_NO							VARCHAR(20),
+	PRODUCT_ID							INTEGER,
+	NO_OF_QUANTITIES					DOUBLE PRECISION,
+	MESSAGE								TEXT,
+	SELLER_TERM_AND_COND				BOOLEAN DEFAULT FALSE,
+	OTHER_TERM_AND_COND					BOOLEAN DEFAULT FALSE,
+	EMAIL_ID							VARCHAR(200),
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT QUOTATION_PKEY PRIMARY KEY (ID),
+	FOREIGN KEY (PRODUCT_ID) REFERENCES PRODUCT.PRODUCT(ID)
+);
+
+
+-------------------------------------------------------------------------- REVIEW_AND_COMMENTS ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS PRODUCT.SEQ_REANDCOM_ID;
+
+
+CREATE TABLE IF NOT EXISTS  PRODUCT.REVIEW_AND_COMMENTS (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('PRODUCT.SEQ_REANDCOM_ID'),
+	MESSAGE								TEXT,
+	RATINGS								DOUBLE PRECISION,
+	VERIFIED_CUSTOMER					BOOLEAN DEFAULT FALSE,
+	USER_NAME							VARCHAR(200),
+	REVIEWED_FOR						VARCHAR(200),
+	REVIEWED_ITEM_ID					INTEGER,
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT REANDCOM_PKEY PRIMARY KEY (ID)
+);
+
+-------------------------------------------------------------------------- TESTIMONIAL ------------------------------------------------------------------
+
+
+CREATE SEQUENCE IF NOT EXISTS PRODUCT.SEQ_TESTIMONIAL_ID;
+
+
+CREATE TABLE IF NOT EXISTS  PRODUCT.TESTIMONIAL (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('PRODUCT.SEQ_TESTIMONIAL_ID'),
+	NAME								VARCHAR(200),
+	ORG_NAME							VARCHAR(200),
+	ORG_LOCATION						TEXT,
+	ORG_ADDRESS							TEXT,
+	DESIGNATION							VARCHAR(200),
+	COMMENTS							TEXT,
+	ACTIVE								INTEGER DEFAULT 1,
+	CREATED_TIME						TIMESTAMP,
+	CREATED_BY							VARCHAR(100),
+	UPDATED_TIME						TIMESTAMP,
+	UPDATED_BY							VARCHAR(100),
+	CONSTRAINT TESTIMONIAL_PKEY PRIMARY KEY (ID)
+);
+
+------------------------------------------------------------------------- Email Server  --------------------------------------------------------------------------
+
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_EMAIL_SERVER_ID;
+
+CREATE TABLE IF NOT EXISTS BASE.EMAIL_SERVER_INFO (
+	ID 									INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_EMAIL_SERVER_ID'),
+	NAME								VARCHAR(100),
+	SMTP_HOST                           VARCHAR(100),
+    SMTP_PORT_NUMBER                    INTEGER, 	
+	FROM_EMAIL_ID   					VARCHAR(100),
+	FROM_EMAIL_NAME                     VARCHAR(100),
+	SMTP_USER_NAME  					VARCHAR(100),
+	SMTP_PASSWORD                       VARCHAR(100),
+	ACTIVE 								INTEGER DEFAULT 1,
+	CREATED_BY                          VARCHAR(50),
+	CREATED_TIME 					    TIMESTAMP,
+	UPDATED_BY 							VARCHAR(50),
+	UPDATED_TIME 						TIMESTAMP,
+	PRIMARY KEY(ID)
+   );
+
+------------------------------------------------------------------------- Email Message  --------------------------------------------------------------------------
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_EMAIL_MESSAGE_ID;
+
+
+CREATE TABLE IF NOT EXISTS  BASE.EMAIL_MESSAGE (
+	ID               INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_EMAIL_MESSAGE_ID'),
+	FROM_EMAIL                      VARCHAR(50),
+	DESTINATION_EMAIL_ID            VARCHAR(500),
+	DELIVERY_STATUS                 INTEGER DEFAULT 0,
+    EMAIL_SUBJECT                   VARCHAR(250),
+	EMAIL_BODY                      VARCHAR(50000),
+	ATTACHMENT_PATH                 VARCHAR(100),
+	DESTINATION_CCEMAIL_ID          VARCHAR(500),
+	MESSAGE_DELIVERY_REMARKS        VARCHAR(100), 
+	ACTIVE                          INTEGER DEFAULT 1,
+	CREATED_BY                      VARCHAR(50),
+	CREATED_TIME                    TIMESTAMP,
+    UPDATED_BY                 		VARCHAR(50),
+	UPDATED_TIME                  	TIMESTAMP, 
+	SENDER_ID						INTEGER,
+	PRIMARY KEY(ID)
+);
+
+---------------------------------------------------------------------TEMPLATE---------------------------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_TEMPLATE_ID;
+
+
+CREATE TABLE IF NOT EXISTS  BASE.TEMPLATE (
+	ID                   			INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_TEMPLATE_ID'),
+   	TYPE                         	VARCHAR(15),
+    NAME	   			            VARCHAR(30),
+    CONTENT                       	TEXT, 
+   	ACTIVE                        	INTEGER DEFAULT 1,
+    CREATED_BY                    	VARCHAR(50),
+	CREATED_TIME                  	TIMESTAMP,
+	UPDATED_BY               		VARCHAR(50),
+	UPDATED_TIME              		TIMESTAMP,
+   	PRIMARY KEY(ID)
+);
+
+-------------------------------------------------------------------------- ORG_PARAM ------------------------------------------------------------------
+
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_ORG_PARAM_ID;
+
+
+CREATE TABLE IF NOT EXISTS  BASE.ORG_PARAM (
+	ID                   			INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_ORG_PARAM_ID'),
+   	NAME                         	VARCHAR(100),
+    VALUE	   			            VARCHAR(100),
+    DATA_TYPE                       VARCHAR(100),
+	ORG_ID							INTEGER NOT NULL,
+   	ACTIVE                        	INTEGER DEFAULT 1,
+    CREATED_BY                    	VARCHAR(50),
+	CREATED_TIME                  	TIMESTAMP,
+	UPDATED_BY               		VARCHAR(50),
+	UPDATED_TIME              		TIMESTAMP,
+   	PRIMARY KEY(ID),
+	FOREIGN KEY (ORG_ID) REFERENCES BASE.ORGANIZATION(ID),
+	CONSTRAINT UNI_ORG_PARAM_ORG_ID_NAME UNIQUE(ORG_ID, NAME)
+);
+
+-------------------------------------------------------------------------- REFERENCED_FROM ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_REF_FROM_ID;
+
+
+CREATE TABLE IF NOT EXISTS  BASE.REFERENCED_FROM (
+	ID                   			INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_REF_FROM_ID'),
+   	NAME                         	VARCHAR(100),
+	ORG_ID							INTEGER NOT NULL,
+   	ACTIVE                        	INTEGER DEFAULT 1,
+    CREATED_BY                    	VARCHAR(50),
+	CREATED_TIME                  	TIMESTAMP,
+	UPDATED_BY               		VARCHAR(50),
+	UPDATED_TIME              		TIMESTAMP,
+   	PRIMARY KEY(ID),
+	FOREIGN KEY (ORG_ID) REFERENCES BASE.ORGANIZATION(ID),
+	CONSTRAINT UNI_REF_FROM_ORG_ID_NAME UNIQUE(ORG_ID, NAME)
+);
+

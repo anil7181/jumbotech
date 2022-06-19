@@ -78,8 +78,8 @@ public class MasterConstants {
 	public static final boolean DEFAULT_NO = false;
 
 	// INT USER TYPE
-	public static final int DEFAULT_INT_NORMAL_USER = 0;
-	public static final int DEFAULT_INT_SUPER_ADMIN = 1;
-	public static final int DEFAULT_INT_ADMIN = 2;
+	public static final int DEFAULT_INT_NORMAL_USER = 1;
+	public static final int DEFAULT_INT_SUPER_ADMIN = 2;
+	public static final int DEFAULT_INT_ADMIN = 3;
 
 }

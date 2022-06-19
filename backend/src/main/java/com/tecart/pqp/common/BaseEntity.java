@@ -47,6 +47,17 @@ public class BaseEntity {
 		return createdBy;
 	}
 
+	public BaseEntity() {
+	}
+
+	public BaseEntity(String createdBy, Date createdTime, String updatedBy, Date updatedTime, int active) {
+		this.createdBy = createdBy;
+		this.createdTime = createdTime;
+		this.updatedBy = updatedBy;
+		this.updatedTime = updatedTime;
+		this.active = active;
+	}
+
 	/**
 	 * @param createdBy the createdBy to set
 	 */

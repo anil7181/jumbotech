@@ -1,5 +1,7 @@
 package com.tecart.pqp.entity.product;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tecart.pqp.common.BaseEntity;
 
 @Entity
-@Table(schema = "BASE", name = "QUOTATION")
+@Table(schema = "PRODUCT", name = "QUOTATION")
 public class Quotation extends BaseEntity{
 
 	@Id
@@ -38,7 +40,7 @@ public class Quotation extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "physicalStatus"})
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "product"})
 	private Product product;
 	
 	@Column(name = "NO_OF_QUANTITIES")
@@ -48,13 +50,28 @@ public class Quotation extends BaseEntity{
 	private String message;
 	
 	@Column(name = "SELLER_TERM_AND_COND")
-	private String sellerTermAndCond;
+	private boolean sellerTermAndCond;
 	
 	@Column(name = "OTHER_TERM_AND_COND")
-	private String otherTermAndCond;
+	private boolean otherTermAndCond;
 	
 	@Column(name = "EMAIL_ID")
 	private String emailId;
+
+	public Quotation(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Quotation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Quotation(String createdBy, Date createdTime, String updatedBy, Date updatedTime, int active) {
+		super(createdBy, createdTime, updatedBy, updatedTime, active);
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;
@@ -128,19 +145,19 @@ public class Quotation extends BaseEntity{
 		this.message = message;
 	}
 
-	public String getSellerTermAndCond() {
+	public boolean isSellerTermAndCond() {
 		return sellerTermAndCond;
 	}
 
-	public void setSellerTermAndCond(String sellerTermAndCond) {
+	public void setSellerTermAndCond(boolean sellerTermAndCond) {
 		this.sellerTermAndCond = sellerTermAndCond;
 	}
 
-	public String getOtherTermAndCond() {
+	public boolean isOtherTermAndCond() {
 		return otherTermAndCond;
 	}
 
-	public void setOtherTermAndCond(String otherTermAndCond) {
+	public void setOtherTermAndCond(boolean otherTermAndCond) {
 		this.otherTermAndCond = otherTermAndCond;
 	}
 

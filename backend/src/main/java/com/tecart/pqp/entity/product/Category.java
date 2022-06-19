@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.tecart.pqp.common.BaseEntity;
 
 @Entity
-@Table(schema = "BASE", name = "CATEGORY")
+@Table(schema = "PRODUCT", name = "CATEGORY")
 public class Category extends BaseEntity{
 
 	@Id
@@ -35,6 +35,16 @@ public class Category extends BaseEntity{
 	
 	@Column(name = "FIELD3")
 	private String field3;
+
+	public Category(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Category() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;

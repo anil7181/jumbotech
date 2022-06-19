@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.tecart.pqp.common.BaseEntity;
 
 @Entity
-@Table(schema = "BASE", name = "TESTIMONIAL")
+@Table(schema = "PRODUCT", name = "TESTIMONIAL")
 public class Testimonial extends BaseEntity{
 	@Id
 	@Column(name = "ID")

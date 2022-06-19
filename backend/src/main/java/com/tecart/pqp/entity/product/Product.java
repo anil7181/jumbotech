@@ -11,12 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tecart.pqp.common.BaseEntity;
 
 @Entity
-@Table(schema = "BASE", name = "PRODUCT")
+@Table(schema = "PRODUCT", name = "PRODUCT")
 public class Product extends BaseEntity{
 
 	@Id
@@ -39,7 +40,7 @@ public class Product extends BaseEntity{
 	@Column(name = "MULTI_FUNCTIONAL_DESCRIPTION")
 	private String multiFunctionalDescription;
 	
-	@OneToMany
+	@Transient
 	private List<Documents> documentList;
 	
 	@ManyToOne
@@ -68,8 +69,18 @@ public class Product extends BaseEntity{
 	@Column(name = "GUARANTY_INFO")
 	private String guarantyInfo;
 	
-	@OneToMany
+	@Transient
 	private List<ReviewAndComments> reviewAndCommentList;
+
+	public Product(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;

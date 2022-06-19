@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.tecart.pqp.common.BaseEntity;
 
 @Entity
-@Table(schema = "BASE", name = "DOCUMENTS")
+@Table(schema = "PRODUCT", name = "DOCUMENTS")
 public class Documents extends BaseEntity{
 
 	@Id
@@ -20,6 +20,9 @@ public class Documents extends BaseEntity{
 	
 	@Column(name = "NAME")
 	private String name;
+	
+	@Column(name = "DESCRIPTION")
+	private String description;
 	
 	@Column(name = "SET_AUTO_NAME")
 	private boolean setAutoName;
@@ -79,6 +82,14 @@ public class Documents extends BaseEntity{
 
 	public void setRelatedTo(String relatedTo) {
 		this.relatedTo = relatedTo;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

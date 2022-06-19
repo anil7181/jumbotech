@@ -2,8 +2,8 @@ package com.tecart.pqp.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,18 +25,18 @@ import com.tecart.pqp.entity.base.User;
 import com.tecart.pqp.repository.UserRepository;
 import com.tecart.pqp.utils.constants.ClassPropertiesNameConstants;
 import com.tecart.pqp.utils.constants.MasterConstants;
+import com.tecart.pqp.utils.exceptions.RecordNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService {
-	
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
 	private CommonService commonService;
-
 
 	static Specification<User> containsUserName(String userName) {
 		return (user, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(
@@ -73,14 +73,19 @@ public class UserService implements UserDetailsService {
 						.get(ClassPropertiesNameConstants.CLASS_PROPERTY_BRANCH_CODE), "%" + branchCode + "%");
 	}
 
+	private Specification<User> isUserActive(int active) {
+		return (user, criteriaQuery, criteriaBuilder) -> criteriaBuilder
+				.equal(user.get(ClassPropertiesNameConstants.CLASS_PROPERTY_ACTIVE_FLAG), active);
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("Inside the loadUserByUsername method in service");
 
 		User user = userRepository.findUserByUserName(username);
 
-		if(user == null)
-		 new UsernameNotFoundException("Not Found: " + username);
+		if (user == null)
+			new UsernameNotFoundException("Not Found: " + username);
 
 		return new MyUserPrincipal(user, getAuthorities(user.getUserType()));
 	}
@@ -95,11 +100,11 @@ public class UserService implements UserDetailsService {
 		logger.info("Inside the getPrivileges method in service");
 
 		List<String> privileges = new ArrayList<>();
-		if(userType == MasterConstants.DEFAULT_INT_SUPER_ADMIN) {
+		if (userType == MasterConstants.DEFAULT_INT_SUPER_ADMIN) {
 			privileges.add(MasterConstants.SUPPER_ADMIN_API);
-		} else if(userType == MasterConstants.DEFAULT_INT_ADMIN) {
+		} else if (userType == MasterConstants.DEFAULT_INT_ADMIN) {
 			privileges.add(MasterConstants.ADMIN_API);
-		} else if(userType == MasterConstants.DEFAULT_INT_NORMAL_USER) {
+		} else if (userType == MasterConstants.DEFAULT_INT_NORMAL_USER) {
 			privileges.add(MasterConstants.NORMAL_API);
 		}
 		privileges.add(MasterConstants.COMMON_API);
@@ -122,7 +127,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public Page<User> getListOfAllUser(User user, Integer pageNo, String sortKey, Integer recordsPerPage,
-			String sortDir) {
+			String sortDir, User loggedInUser) {
 		logger.info("Inside getListOfAllUser method in service");
 
 		Sort sort = null;
@@ -133,7 +138,7 @@ public class UserService implements UserDetailsService {
 		}
 
 		Pageable page = PageRequest.of(pageNo, recordsPerPage, sort);
-		Page<User> userPageableList = userRepository.findAll(searchCriteriaForUser(user, null), page);
+		Page<User> userPageableList = userRepository.findAll(searchCriteriaForUser(user, loggedInUser), page);
 
 		return userPageableList;
 	}
@@ -148,13 +153,7 @@ public class UserService implements UserDetailsService {
 				.and(commonService.isGivenStringNtEmptyAndNtNull(user.getEmailId()) ? containsEmailId(user.getEmailId())
 						: null)
 				.and(user.getId() > 0 ? userUserId(user.getId()) : null)
-//				.and((user. != null) && user.getCaste().getId() > 0
-//						? hasCasteId(user.getCaste().getId())
-//						: null)
-//				.and((user.getCaste() != null)
-//						&& commonService.isGivenStringNtEmptyAndNtNull(user.getCaste().getName())
-//								? hasCasteName(user.getCaste().getName())
-//								: null);
+				.and(user.getActive() > 0 ? isUserActive(user.getActive()) : null)
 				.and(commonService.isGivenStringNtEmptyAndNtNull(user.getMobileNo())
 						? containsMobileNo(user.getMobileNo())
 						: null);
@@ -172,11 +171,10 @@ public class UserService implements UserDetailsService {
 	public User authenticateUser(User user) {
 		logger.info("Inside authenticateUser method in service");
 
-		Date currentDate = new Date();
 		User authenticatedUser = null;
 
 		authenticatedUser = userRepository.findByUserNameAndPasswordWithValidToDateAfter(user.getUserName(),
-				user.getPassword(), currentDate);
+				user.getPassword());
 
 		return authenticatedUser;
 	}
@@ -186,5 +184,31 @@ public class UserService implements UserDetailsService {
 
 		return userRepository.findUserByUserName(userName);
 
+	}
+
+	public User loadUserById(Integer id, User loggedInUser) {
+		logger.info("Inside loadUserById method in service");
+		User userById = null;
+
+		Optional<User> optionalUser = userRepository.findOne(searchCriteriaForUser(new User(id), loggedInUser));
+
+		if (optionalUser.isPresent()) {
+			userById = optionalUser.get();
+		}
+
+		return userById;
+	}
+
+	public void deleteUserById(Integer id, User loggedInUser) {
+		logger.info("Inside deleteUserById method in service");
+		User userToBeDeleted = loadUserById(id, loggedInUser);
+
+		if (userToBeDeleted != null) {
+			userRepository.delete(userToBeDeleted);
+		} else {
+			String recordNotFoundMessage = "User not found for User Id - " + id;
+			logger.info(recordNotFoundMessage);
+			throw new RecordNotFoundException(recordNotFoundMessage);
+		}
 	}
 }
