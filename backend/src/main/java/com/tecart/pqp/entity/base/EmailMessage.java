@@ -22,7 +22,7 @@ public class EmailMessage extends BaseEntity{
 	private String fromEmail;
 	
 	@Column(name = "DESTINATION_EMAIL_ID")
-	private String destinationEmailId;
+	private String emailTo;
 	
 	@Column(name = "DELIVERY_STATUS")
 	private int deliveryStatus;
@@ -37,13 +37,46 @@ public class EmailMessage extends BaseEntity{
 	private String attachmentPath;
 	
 	@Column(name = "DESTINATION_CCEMAIL_ID")
-	private String destinationCcEmailId;
+	private String emailCc;
 	
 	@Column(name = "MESSAGE_DELIVERY_REMARKS")
 	private String messageDeliveryRemarks;
 	
 	@Column(name = "SENDER_ID")
 	private int senderId;
+	
+	@Column(name = "EMAIL_BCC")
+	private String emailBcc;
+
+	/**
+	 * @param id
+	 * @param fromEmail
+	 * @param deliveryStatus
+	 * @param emailSubject
+	 * @param emailBody
+	 * @param attachmentPath
+	 * @param messageDeliveryRemarks
+	 * @param senderId
+	 * @param emailTo
+	 * @param emailCc
+	 * @param emailBcc
+	 */
+	public EmailMessage(int id, String fromEmail, int deliveryStatus, String emailSubject,
+			String emailBody, String attachmentPath, String messageDeliveryRemarks,
+			int senderId, String emailTo, String emailCc, String emailBcc) {
+		super();
+		this.id = id;
+		this.fromEmail = fromEmail;
+		this.deliveryStatus = deliveryStatus;
+		this.emailSubject = emailSubject;
+		this.emailBody = emailBody;
+		this.attachmentPath = attachmentPath;
+		this.messageDeliveryRemarks = messageDeliveryRemarks;
+		this.senderId = senderId;
+		this.emailTo = emailTo;
+		this.emailCc = emailCc;
+		this.emailBcc = emailBcc;
+	}
 
 	/**
 	 * 
@@ -79,20 +112,6 @@ public class EmailMessage extends BaseEntity{
 	 */
 	public void setFromEmail(String fromEmail) {
 		this.fromEmail = fromEmail;
-	}
-
-	/**
-	 * @return the destinationEmailId
-	 */
-	public String getDestinationEmailId() {
-		return destinationEmailId;
-	}
-
-	/**
-	 * @param destinationEmailId the destinationEmailId to set
-	 */
-	public void setDestinationEmailId(String destinationEmailId) {
-		this.destinationEmailId = destinationEmailId;
 	}
 
 	/**
@@ -152,20 +171,6 @@ public class EmailMessage extends BaseEntity{
 	}
 
 	/**
-	 * @return the destinationCcEmailId
-	 */
-	public String getDestinationCcEmailId() {
-		return destinationCcEmailId;
-	}
-
-	/**
-	 * @param destinationCcEmailId the destinationCcEmailId to set
-	 */
-	public void setDestinationCcEmailId(String destinationCcEmailId) {
-		this.destinationCcEmailId = destinationCcEmailId;
-	}
-
-	/**
 	 * @return the messageDeliveryRemarks
 	 */
 	public String getMessageDeliveryRemarks() {
@@ -191,6 +196,48 @@ public class EmailMessage extends BaseEntity{
 	 */
 	public void setSenderId(int senderId) {
 		this.senderId = senderId;
+	}
+
+	/**
+	 * @return the emailTo
+	 */
+	public String getEmailTo() {
+		return emailTo;
+	}
+
+	/**
+	 * @param emailTo the emailTo to set
+	 */
+	public void setEmailTo(String emailTo) {
+		this.emailTo = emailTo;
+	}
+
+	/**
+	 * @return the emailCc
+	 */
+	public String getEmailCc() {
+		return emailCc;
+	}
+
+	/**
+	 * @param emailCc the emailCc to set
+	 */
+	public void setEmailCc(String emailCc) {
+		this.emailCc = emailCc;
+	}
+
+	/**
+	 * @return the emailBcc
+	 */
+	public String getEmailBcc() {
+		return emailBcc;
+	}
+
+	/**
+	 * @param emailBcc the emailBcc to set
+	 */
+	public void setEmailBcc(String emailBcc) {
+		this.emailBcc = emailBcc;
 	}
 	
 }

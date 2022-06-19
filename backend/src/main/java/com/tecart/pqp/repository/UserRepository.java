@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 	@Query("SELECT u.password FROM User u where u.id = :userId")
 	String findPasswordById(@Param("userId") int userId);
 	
+	@Query(value = "select * from base.user where LOWER(email_id) LIKE LOWER(:emailId)", nativeQuery = true)
+	User findUserByEmailId(@Param("emailId")String emailId);
+	
 }

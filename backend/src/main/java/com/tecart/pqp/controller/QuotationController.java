@@ -37,7 +37,7 @@ public class QuotationController {
 	@Autowired
 	private QuotationService quotationService;
 
-	@PreAuthorize("hasAnyAuthority('READ_ORG', 'SUPPER_ADMIN_API', 'ADMIN_API'')")
+	@PreAuthorize("hasAnyAuthority('READ_ORG', 'SUPPER_ADMIN_API', 'ADMIN_API')")
 	@GetMapping({ "/quotations" })
 	public Page<Quotation> getListOfAllUser(
 			@RequestParam(value = "pageNo", defaultValue = MasterConstants.DEFAULT_PAGE_NO_VALUE) Integer pageNo,

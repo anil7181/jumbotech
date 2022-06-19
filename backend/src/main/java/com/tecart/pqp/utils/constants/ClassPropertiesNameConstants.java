@@ -83,4 +83,16 @@ public class ClassPropertiesNameConstants {
 	public static final String CLASS_PROPERTY_REVIEW_REVIEWED_FOR = "reviewedFor";
 	public static final String CLASS_PROPERTY_REVIEW_REVIEWED_ITEM_ID = "reviewedItemId";
 
+	// EMAIL SERVER CONFIG
+	public static final String CLASS_PROPERTY_EMAIL_SERVER_ID = "emailServerId";
+	public static final String CLASS_PROPERTY_SMTP_HOST = "smtpHost";
+	public static final String CLASS_PROPERTY_SMTP_PORT_NUMBER = "smtpPortNumber";
+	public static final String CLASS_PROPERTY_FROM_EMAIL_ID = "fromEmailId";
+	public static final String CLASS_PROPERTY_FROM_EMAIL_NAME = "fromEmailName";
+	public static final String CLASS_PROPERTY_REPLY_TO_EMAIL_ID = "replyToEmailId";
+	public static final String CLASS_PROPERTY_SECURED_FLAG = "secured";
+	public static final String CLASS_PROPERTY_VERIFY_CERTIFICATE_FLAG = "verifyCertificate";
+	public static final String CLASS_PROPERTY_SMTP_USER_NAME = "smtpUserName";
+	public static final String CLASS_PROPERTY_SMTP_PASSWORD = "smtpPassword";
+	public static final String CLASS_PROPERTY_IS_MASTER_FLAG = "isMaster";
 }

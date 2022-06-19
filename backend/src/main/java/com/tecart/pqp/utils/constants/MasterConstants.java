@@ -30,6 +30,8 @@ public class MasterConstants {
 	public static final boolean BOOLEAN_TRUE = true;
 	public static final boolean BOOLEAN_FALSE = false;
 	public static final String DEFAULT_SORT_KEY_FOR_MENU = "menuId";
+	public static final int DEFAULT_ACTIVE_FALG = 1;
+	public static final int DEFAULT_IN_ACTIVE_FLAG = 2;
 
 	// COMMON USED MAGIC NUMBERS
 	public static final String STRING_NULL_VALUE = "null";
@@ -81,5 +83,16 @@ public class MasterConstants {
 	public static final int DEFAULT_INT_NORMAL_USER = 1;
 	public static final int DEFAULT_INT_SUPER_ADMIN = 2;
 	public static final int DEFAULT_INT_ADMIN = 3;
+	
+	//EMAIL SERVER
+	public static final String EMAIL_CONTENT_TYPE_TEXT_OR_HTML = "text/html";
+	public static final String EMAIL_CONTENT_TYPE_TEXT_OR_PLAIN = "text/plain";
+	
+	public static final String EMAIL_CONTENT_CHAR_SET_US_ASCII = "us-ascii";
+	public static final String EMAIL_CONTENT_CHAR_SET_ISO_8859_1 = "iso-8859-1";
+	public static final int EMAIL_DELIVERY_STATUS_IN_PROGRESS = 0;
+	public static final int EMAIL_DELIVERY_STATUS_DELIVERED = 1;
+	public static final int EMAIL_DELIVERY_STATUS_FAILED = 2;
 
+	public static final int NEW_ID_TO_BE_SAVED = 0;
 }

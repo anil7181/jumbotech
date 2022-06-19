@@ -244,34 +244,36 @@ CREATE TABLE IF NOT EXISTS BASE.EMAIL_SERVER_INFO (
 	FROM_EMAIL_NAME                     VARCHAR(100),
 	SMTP_USER_NAME  					VARCHAR(100),
 	SMTP_PASSWORD                       VARCHAR(100),
+	ORG_ID								INTEGER,
 	ACTIVE 								INTEGER DEFAULT 1,
 	CREATED_BY                          VARCHAR(50),
 	CREATED_TIME 					    TIMESTAMP,
 	UPDATED_BY 							VARCHAR(50),
 	UPDATED_TIME 						TIMESTAMP,
-	PRIMARY KEY(ID)
+	PRIMARY KEY(ID),
+	FOREIGN KEY (ORG_ID) REFERENCES BASE.ORGANIZATION(ID)
    );
-
 ------------------------------------------------------------------------- Email Message  --------------------------------------------------------------------------
 CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_EMAIL_MESSAGE_ID;
 
 
 CREATE TABLE IF NOT EXISTS  BASE.EMAIL_MESSAGE (
 	ID               INTEGER CHECK (ID >= 0) DEFAULT nextval('BASE.SEQ_EMAIL_MESSAGE_ID'),
-	FROM_EMAIL                      VARCHAR(50),
+	FROM_EMAIL                      VARCHAR(100),
 	DESTINATION_EMAIL_ID            VARCHAR(500),
 	DELIVERY_STATUS                 INTEGER DEFAULT 0,
     EMAIL_SUBJECT                   VARCHAR(250),
 	EMAIL_BODY                      VARCHAR(50000),
 	ATTACHMENT_PATH                 VARCHAR(100),
 	DESTINATION_CCEMAIL_ID          VARCHAR(500),
-	MESSAGE_DELIVERY_REMARKS        VARCHAR(100), 
+	MESSAGE_DELIVERY_REMARKS        TEXT, 
 	ACTIVE                          INTEGER DEFAULT 1,
 	CREATED_BY                      VARCHAR(50),
 	CREATED_TIME                    TIMESTAMP,
     UPDATED_BY                 		VARCHAR(50),
 	UPDATED_TIME                  	TIMESTAMP, 
 	SENDER_ID						INTEGER,
+	EMAIL_BCC						VARCHAR(500),
 	PRIMARY KEY(ID)
 );
 
@@ -332,5 +334,33 @@ CREATE TABLE IF NOT EXISTS  BASE.REFERENCED_FROM (
    	PRIMARY KEY(ID),
 	FOREIGN KEY (ORG_ID) REFERENCES BASE.ORGANIZATION(ID),
 	CONSTRAINT UNI_REF_FROM_ORG_ID_NAME UNIQUE(ORG_ID, NAME)
+);
+
+
+-------------------------------------------------------------------------- OTP ------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS BASE.SEQ_OTP_ID
+START 1
+INCREMENT 1
+MINVALUE 1;
+
+
+CREATE TABLE base.otp
+(
+    otp_id integer NOT NULL DEFAULT nextval('base.seq_otp_id'::regclass),
+    cause_of_generation character varying(100) COLLATE pg_catalog."default",
+    user_id integer NOT NULL,
+    value character varying(100) COLLATE pg_catalog."default",
+    active int DEFAULT 1,
+    created_by character varying(50) COLLATE pg_catalog."default",
+    created_time timestamp without time zone,
+    updated_by character varying(50) COLLATE pg_catalog."default",
+    updated_time timestamp without time zone,
+    CONSTRAINT m_otp_pkey PRIMARY KEY (otp_id),
+    CONSTRAINT otp_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES base."user" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT otp_otp_id_check CHECK (otp_id >= 0)
 );
 

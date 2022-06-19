@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tecart.pqp.common.BaseEntity;
 
 @Entity
@@ -25,7 +28,7 @@ public class EmailServer extends BaseEntity{
 	private String smtpHost;
 	
 	@Column(name = "SMTP_PORT_NUMBER")
-	private int smtpPortNumbert;
+	private int smtpPortNumber;
 	
 	@Column(name = "FROM_EMAIL_ID")
 	private String fromEmail;
@@ -38,6 +41,11 @@ public class EmailServer extends BaseEntity{
 	
 	@Column(name = "SMTP_PASSWORD")
 	private String smtpPassword;
+	
+	@ManyToOne
+	@JoinColumn(name = "ORG_ID", referencedColumnName = "ID")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "organization"})
+	private Organization organization;
 
 	/**
 	 * 
@@ -92,15 +100,15 @@ public class EmailServer extends BaseEntity{
 	/**
 	 * @return the smtpPortNumbert
 	 */
-	public int getSmtpPortNumbert() {
-		return smtpPortNumbert;
+	public int getSmtpPortNumber() {
+		return smtpPortNumber;
 	}
 
 	/**
 	 * @param smtpPortNumbert the smtpPortNumbert to set
 	 */
-	public void setSmtpPortNumbert(int smtpPortNumbert) {
-		this.smtpPortNumbert = smtpPortNumbert;
+	public void setSmtpPortNumber(int smtpPortNumber) {
+		this.smtpPortNumber = smtpPortNumber;
 	}
 
 	/**
@@ -157,6 +165,20 @@ public class EmailServer extends BaseEntity{
 	 */
 	public void setSmtpPassword(String smtpPassword) {
 		this.smtpPassword = smtpPassword;
+	}
+
+	/**
+	 * @return the organization
+	 */
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 	
 }

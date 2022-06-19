@@ -1,5 +1,7 @@
 package com.tecart.pqp.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.tecart.pqp.common.CommonKeyValueParameters;
 import com.tecart.pqp.common.MyUserPrincipal;
 import com.tecart.pqp.entity.base.User;
 import com.tecart.pqp.repository.UserRepository;
@@ -45,5 +48,25 @@ public class CommonService {
 	
 	public String getUserNameByLoggedInUser(User loggedInUser) {
 		return loggedInUser != null ? loggedInUser.getUserName() : "GuestUser";
+	}
+
+	public String replaceKeyByValueParamsFromStr(List<CommonKeyValueParameters> listOfKeyValueParam, String srcStr) {
+		logger.info("Entering into method replaceKeyByValueParamsFromStr in CommonService");
+
+		String paramsReplacedStr = srcStr;
+		if (srcStr != null && !srcStr.isEmpty() && !listOfKeyValueParam.isEmpty()) {
+			for (CommonKeyValueParameters commonkeyValueParmsObj : listOfKeyValueParam) {
+				if ((commonkeyValueParmsObj.getKey() != null && !commonkeyValueParmsObj.getKey().isEmpty())
+						|| (commonkeyValueParmsObj.getValue() != null
+								&& !commonkeyValueParmsObj.getValue().isEmpty())) {
+					paramsReplacedStr = paramsReplacedStr.replace(commonkeyValueParmsObj.getKey(),
+							commonkeyValueParmsObj.getValue());
+				}
+			}
+
+		}
+
+		return paramsReplacedStr;
+
 	}
 }

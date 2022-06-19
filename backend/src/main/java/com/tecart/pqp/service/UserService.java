@@ -211,4 +211,11 @@ public class UserService implements UserDetailsService {
 			throw new RecordNotFoundException(recordNotFoundMessage);
 		}
 	}
+	
+	public User findUserByEmailId(String emailId) {
+		logger.info("Inside findUserByEmailId method in service");
+
+		User user = userRepository.findUserByEmailId(emailId);
+		return user != null ? user : null;
+	}
 }

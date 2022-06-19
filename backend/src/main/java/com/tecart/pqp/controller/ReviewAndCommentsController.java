@@ -37,7 +37,7 @@ public class ReviewAndCommentsController {
 	@Autowired
 	private ReviewAndCommentsService reviewAndCommentsService;
 
-	@PreAuthorize("hasAnyAuthority('READ_ORG', 'SUPPER_ADMIN_API', 'ADMIN_API'')")
+	@PreAuthorize("hasAnyAuthority('READ_ORG', 'SUPPER_ADMIN_API', 'ADMIN_API')")
 	@GetMapping({ "/reviewAndComments" })
 	public Page<ReviewAndComments> getListOfAllUser(
 			@RequestParam(value = "pageNo", defaultValue = MasterConstants.DEFAULT_PAGE_NO_VALUE) Integer pageNo,
